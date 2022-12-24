@@ -24,7 +24,7 @@ char	*ft_get_line(char *str)
 		return (0);
 	while (str[i] != '\0' && str[i] != '\n')
 		i++;
-	line = (char *)malloc(sizeof(char) * i + 1 + new_line);
+	line = malloc(sizeof(char) * i + 1 + new_line);
 	if (!line)
 		return (0);
 	i = 0;
@@ -54,7 +54,7 @@ char	*ft_get_new_str(char *str)
 		free(str);
 		return (0);
 	}
-	new_line = (char *)malloc(sizeof(char) * (j - i) + 1);
+	new_line = malloc(sizeof(char) * (j - i) + 1);
 	if (!new_line)
 		return (0);
 	j = 0;
@@ -71,7 +71,7 @@ char	*ft_get_read(int fd, char *str)
 	int		count;
 	char	*now_str;
 
-	now_str = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	now_str = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!now_str)
 		return (0);
 	count = 1;
@@ -107,20 +107,27 @@ char	*get_next_line(int fd)
 	return (line);
 }
 /*
-int main()
-{
-	int	fd = open("a.txt", O_RDONLY);
-	char *a = get_next_line(fd);
-	printf("%s", a);
-	system("leaks a.out");
+#include <stdio.h>
+#include <fcntl.h>
+//This main function will print the first line of file.
 
-} 
-*/
-/*
 int	main(void)
 {
 	int	fd = open("a.txt", O_RDONLY);
-	char *a = get_next_line(fd);
+	char	*a = get_next_line(fd);
+	printf("%s", a);
+	system("leaks a.out"); //This line will show you the leaks.
+
+} 
+*/
+
+/*
+//This main function will print out the all lines in file.
+
+int	main(void)
+{
+	int	fd = open("a.txt", O_RDONLY);
+	char	*a = get_next_line(fd);
 	free(a);
 	while (a)
 	{
@@ -128,61 +135,45 @@ int	main(void)
 		a = get_next_line(fd);
 		free(a);
 	}
-	//printf("\n");
 	//system("leaks a.out");
 }*/
 
 /*
+//This main function will print out the first five line from file.
+
 int	main(void)
 {
 	int	fd;
 	fd = open ("a.txt", O_RDONLY);
-	char *a = get_next_line(fd);
-	char *b = get_next_line(fd);
-	char *c = get_next_line(fd);
-	char *d = get_next_line(fd);
-	char *e = get_next_line(fd);
+	char	*a = get_next_line(fd);
+	char	*b = get_next_line(fd);
+	char	*c = get_next_line(fd);
+	char	*d = get_next_line(fd);
+	char	*e = get_next_line(fd);
 	printf("%s", a);
 	printf("%s", b);
 	printf("%s", c);
 	printf("%s", d);
 	printf("%s", e);
-	close (fd);
-	system ("leaks a.out");
+	system("leaks a.out");
 }*/
 
 /*
-int main() {
-	int fd = open("a.txt", O_CREAT | O_RDONLY, 0777);
-	char* a;
-	// char *b;
-	while (a != NULL)
+//This main function will print out only third line of file.
+int	main()
+{
+	int	fd = open("a.txt", O_RDONLY);
+	char	*a = get_next_line(fd);
+	free(a);
+	int	count = 1;
+	while (a)
 	{
-		a = get_next_line(fd);
-		printf("%s", a);
-		free(a);
-		// free(b);
+		if (count == 3)
+			printf("%s", a);
+	count++;
+	a = get_next_line(fd);
+	free(a);
 	}
 	system("leaks a.out");
-	return 0;
-}
-*/
-/*
-int main()
-{
-	int a = open("a.txt", O_RDONLY, 0777);
-	char	*str = get_next_line(a);
-	int count = 1;
-	while (*str)
-	{
-		if ( count == 3)
-		{
-			printf("%s", str);
-			return (0);
-		}
-	count += 1;
-	str = get_next_line(a);
-	free(str);
-	}
 }
 */
