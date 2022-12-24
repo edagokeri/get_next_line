@@ -105,12 +105,15 @@ char	*get_next_line(int fd)
 	return (line);
 }
 /*
+#include <stdio.h>
+#include <fcntl.h>
+//This main function prints all lines from two file.
+
 int	main(void)
 {
 	int	fd1 = open("a.txt", O_RDONLY);
 	int	fd2 = open("b.txt", O_RDONLY);
-	char *a = get_next_line(fd1);
-	char *b = get_next_line(fd2);
+	char	*a = get_next_line(fd1);
 	free(a);
 	while (a)
 	{
@@ -118,7 +121,7 @@ int	main(void)
 		a = get_next_line(fd1);
 		free(a);
 	}
-	printf("%c", '\n');
+	char	*b = get_next_line(fd2);
 	free(b);
 	while (b)
 	{
@@ -130,55 +133,66 @@ int	main(void)
 }*/
 
 /*
-int main()
+//This main function prints one line from first file one line from second file.
+
+int	main(void)
 {
-	int fd;
-
-	fd = open("t1.txt", O_RDONLY);
-	fd = open("t2.txt", O_RDONLY);
-	fd = open("t3.txt", O_RDONLY);
-
-	printf("%d", fd);
-	return 0;
+	int	fd1 = open("a.txt", O_RDONLY);
+	int	fd2 = open("b.txt", O_RDONLY);
+	char	*a = "a";
+	char	*b = "b";
+	while (a && b)
+	{
+		a = get_next_line(fd1);
+		b = get_next_line(fd2);
+		printf("%s%s", a, b);
+		free(a);
+		free(b);
+	}
+	system("leaks a.out");
 }
 */
 
 /*
-int main()
+//This main function prints the value of file descriptors that will start from 3.
+//If the file couldn't created then fd returns -1.
+
+int	main(void)
 {
-	int fd1 = open("t1.txt", O_CREAT|O_RDWR, 0777);
-	int fd2 = open("t2.txt", O_CREAT|O_RDWR, 0777);
-	int fd3 = open("t3.txt", O_CREAT|O_RDWR, 0777);
+	int	fd1;
+	int	fd2;
+	int	fd3;
+
+	fd1 = open("a.txt", O_RDONLY);
+	fd2 = open("b.txt", O_RDONLY);
+	fd3 = open("c.txt", O_RDONLY);
+	printf("%d\n%d\n%d", fd1, fd2, fd3);
+}
+*/
+
+/*
+//This main function create,open and read the files.
+int	main(void)
+{
+	int fd1 = open("a.txt", O_CREAT|O_RDWR, 0777);
+	int fd2 = open("b.txt", O_CREAT|O_RDWR, 0777);
 
 	write(fd1, "11111\naaaaaaaaa\n444444", 30);
 	write(fd2, "22222\nbbbbbbb\n5555555", 30);
-	write(fd3, "333333\ncccccccc\n66666", 30);
 
 	close(fd1);
 	close(fd2);	
-	close(fd3);
 
-	fd1 = open("t1.txt", O_CREAT|O_RDWR, 0777);
-	fd2 = open("t2.txt", O_CREAT|O_RDWR, 0777);
-	fd3 = open("t3.txt", O_CREAT|O_RDWR, 0777);
+	fd1 = open("a.txt", O_CREAT|O_RDWR, 0777);
+	fd2 = open("b.txt", O_CREAT|O_RDWR, 0777);
 
-	printf("a : %d\n", fd1);
-	printf("b : %d\n", fd2);
-	printf("c : %d\n", fd3);
+	printf("%d\n", fd1);
+	printf("%d\n", fd2);
 
-	
-	printf("d : %s\n", get_next_line(fd1));
-	printf("e : %s\n", get_next_line(fd2));
-	printf("f : %s\n", get_next_line(fd3));
-
-	printf("g : %s\n", get_next_line(fd1));
-	printf("h : %s\n", get_next_line(fd2));
-	printf("j : %s\n", get_next_line(fd3));
+	printf("%s",get_next_line(fd1));
+	printf("%s",get_next_line(fd2));
 	
 	close(fd1);
 	close(fd2);
-	close(fd2);
-
-	return 0;
 }
 */
